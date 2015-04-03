@@ -1,0 +1,17 @@
+PACKAGE,CLASS,ABC_MISSED,ABC_COVERED,LIMIT
+com.jacocorules.app,*,BRANCH_MISSED,BRANCH_COVERED,0.23
+com.jacocorules.app,*,LINE_MISSED,LINE_COVERED,0.75
+com.jacocorules.io,*,BRANCH_MISSED,BRANCH_COVERED,0.28
+com.jacocorules.io,*,LINE_MISSED,LINE_COVERED,0.62
+com.jacocorules.io.csv,*,BRANCH_MISSED,BRANCH_COVERED,0.28
+com.jacocorules.io.csv,*,LINE_MISSED,LINE_COVERED,0.8
+com.jacocorules.misc,*,BRANCH_MISSED,BRANCH_COVERED,0.9
+com.jacocorules.misc,*,LINE_MISSED,LINE_COVERED,0.8
+com.jacocorules.report,*,BRANCH_MISSED,BRANCH_COVERED,0.61
+com.jacocorules.report,*,LINE_MISSED,LINE_COVERED,1
+com.jacocorules.rules,*,BRANCH_MISSED,BRANCH_COVERED,0.42
+com.jacocorules.rules,*,LINE_MISSED,LINE_COVERED,0.95
+com.jacocorules.ui,*,BRANCH_MISSED,BRANCH_COVERED,0
+com.jacocorules.ui,*,LINE_MISSED,LINE_COVERED,0.33
+*,*,BRANCH_MISSED,BRANCH_COVERED,0.8
+*,*,LINE_MISSED,LINE_COVERED,0.8

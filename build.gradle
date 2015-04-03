@@ -1,0 +1,58 @@
+/*
+   Gradle build script for JaCoCoRules
+ */
+
+apply plugin: 'groovy'
+apply plugin: 'idea'
+apply plugin: 'jacoco'
+
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.3.7'
+
+    testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
+    testCompile 'junit:junit:4.11'
+
+    testRuntime 'cglib:cglib-nodep:3.1'
+}
+
+jacoco {
+    toolVersion = "0.7.1.201405082137"
+}
+
+jacocoTestReport {
+    dependsOn tasks.withType(Test) // not sure why jacoco plugin doesn't already have this dependency
+    reports {
+        csv.enabled true
+    }
+}
+
+jar {
+    from "license.txt", "readme.md"
+}
+
+task copyToLibs(type: Copy) {
+    into "$buildDir/libs"
+    from configurations.runtime
+}
+
+task 'selfsnapshot'(type: JavaExec) {
+    dependsOn = ['build', 'jacocoTestReport', 'jar', 'copyToLibs']
+
+    description = "Task will create a rules snapshot for the project."
+    classpath = files("build/libs/groovy-all-2.3.7.jar", "build/libs/${project.name}.jar")
+    main = "com.jacocorules.app.JaCoCoRulesApp"
+    args '-input', 'build/reports/jacoco/test/jacocoTestReport.csv', '-snapshot', 'SelfSnapshot_Rules.csv'
+}
+
+task 'selfcheck'(type: JavaExec, dependsOn: 'selfsnapshot') {
+    description = "Topmost task which will build everything, run test, generate report, and check rules coverage."
+    classpath = files("build/libs/groovy-all-2.3.7.jar", "build/libs/${project.name}.jar")
+    main = "com.jacocorules.app.JaCoCoRulesApp"
+    args '-input', 'build/reports/jacoco/test/jacocoTestReport.csv', '-rules', 'SelfCheck_Rules.csv'
+}
